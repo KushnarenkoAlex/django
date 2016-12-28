@@ -1,0 +1,31 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'kushapp/style.css' %}" />
+<h1>{{ author.author_name }}</h1>
+{{ author.birth_date }}
+<br>
+
+
+<ul>
+{% for book in author.book_set.all %}
+    <li>{{ book.book_name }}</li>
+{% endfor %}
+</ul>
+
+<br>
+
+
+<h1>Update authors name</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'update' author.id %}" method="post">
+{% csrf_token %}
+    <input type="text" name="new_name" id="new_name" value="{{ author.author_name }}" />
+    <br />
+<input type="submit" value="Update" />
+</form>
+
+<br>
+<br>
+<a href="{% url 'index'%}">Back</a>
